@@ -26,11 +26,26 @@ The [deployment workflow](.github/workflows/deploy-pages.yml) tests, lints, buil
 
 1. In [repository settings](https://github.com/JamieAinsworth/bug-reporter/settings/pages), open **Pages**.
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**. No `gh-pages` branch is needed.
-3. Commit and push the deployment workflow and this documentation to `main`.
-4. In **Actions**, open **Deploy to GitHub Pages** and wait for the build and deployment jobs to succeed.
-5. Open **https://jamieainsworth.github.io/bug-reporter/**. The deployment job also displays the published URL.
+3. Configure the authenticated package registry as described below.
+4. Commit and push the deployment workflow and this documentation to `main`.
+5. In **Actions**, open **Deploy to GitHub Pages** and wait for the build and deployment jobs to succeed.
+6. Open **https://jamieainsworth.github.io/bug-reporter/**. The deployment job also displays the published URL.
 
 GitHub Pages must be available for the repository under your GitHub plan. Actions must be enabled, and repository or organization policies must permit the actions used by the workflow. If prompted, approve deployment to the `github-pages` environment.
+
+### Authenticated dependency registry
+
+The dependency lockfile uses an authenticated registry. Keep its pinned package versions and integrity hashes; configure GitHub Actions to access that registry:
+
+1. Open **Settings > Secrets and variables > Actions** in the repository.
+2. Under **Variables**, add `NPM_REGISTRY_URL` with the registry URL used by your local installation, including its path and trailing slash. Run `npm config get registry` locally to find it. Do not include credentials in this URL.
+3. Under **Secrets**, add `NPM_TOKEN` with a registry-issued token authorized to download these packages. Use read-only access and the minimum necessary scope. This is a package-registry credential, not a GitHub personal access token.
+4. Make sure registry policy permits access from GitHub-hosted runners. If the registry requires an internal network or a different authentication scheme, the workflow needs a compatible runner or registry-specific setup.
+5. After adding the variable and secret, run **Actions > Deploy to GitHub Pages > Run workflow** on `main`.
+
+The workflow explicitly checks that both values exist and passes the token only to registry validation and dependency installation. It is not added to source files or Vite client variables. Never paste the token into a ticket, chat, or commit.
+
+### Repository asset path
 
 The workflow reads the base path from GitHub Pages and passes it to Vite when building, so assets resolve under `/bug-reporter/` rather than the domain root. Local development keeps Vite's normal root path. To check the repository-path build locally:
 
