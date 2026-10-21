@@ -20,6 +20,29 @@ npm run build
 npm run preview
 ```
 
+## Host on GitHub Pages
+
+The [deployment workflow](.github/workflows/deploy-pages.yml) tests, lints, builds, and deploys this static app on every push to `main`. It can also be started manually from the repository's **Actions** tab.
+
+1. In [repository settings](https://github.com/JamieAinsworth/bug-reporter/settings/pages), open **Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**. No `gh-pages` branch is needed.
+3. Commit and push the deployment workflow and this documentation to `main`.
+4. In **Actions**, open **Deploy to GitHub Pages** and wait for the build and deployment jobs to succeed.
+5. Open **https://jamieainsworth.github.io/bug-reporter/**. The deployment job also displays the published URL.
+
+GitHub Pages must be available for the repository under your GitHub plan. Actions must be enabled, and repository or organization policies must permit the actions used by the workflow. If prompted, approve deployment to the `github-pages` environment.
+
+The workflow reads the base path from GitHub Pages and passes it to Vite when building, so assets resolve under `/bug-reporter/` rather than the domain root. Local development keeps Vite's normal root path. To check the repository-path build locally:
+
+```sh
+npm run build -- --base /bug-reporter/
+npm run preview -- --base /bug-reporter/
+```
+
+Open the preview server's `/bug-reporter/` URL. GitHub Pages serves the compiled `dist` artifact over HTTPS; it does not run the Vite development server. Changes appear after the next successful deployment.
+
+The hosted app retains the same in-memory-only draft behavior. Reports and selected file contents are not sent to GitHub by the application. GitHub still serves and logs ordinary website requests. A future Jira integration will require a separately hosted backend for OAuth secrets, sessions, and tokens; GitHub Pages cannot run that backend.
+
 ## Version 1
 
 - Required summary (maximum 255 characters), environment, reproduction steps, expected result, actual result, frequency, and user impact.
