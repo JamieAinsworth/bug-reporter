@@ -1,0 +1,31 @@
+:root {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #243339;
+  background: #f7f8fa;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea, select { font: inherit; }
+button, a, input, textarea, select { -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; }
+button, a, input, textarea, select { outline-offset: 4px; }
+:focus-visible { outline: 3px solid #237b75; }
+button { transition: background .15s ease, border-color .15s ease; }
+button:disabled { cursor: not-allowed; }
+input, textarea, select { width: 100%; color: #243339; }
+input, textarea, select { border: 1px solid #d9dfe2; border-radius: 7px; padding: 12px 14px; background: #fff; line-height: 1.6; }
+input::placeholder, textarea::placeholder { color: #7a858d; }
+textarea { resize: vertical; min-height: 85px; }
+input:hover, textarea:hover, select:hover { border-color: #9daeb3; }
+input:focus, textarea:focus, select:focus { border-color: #237b75; outline: 2px solid #237b7520; outline-offset: 0; }
+input[type=file] { padding: 9px; max-width: 100%; font-size: 12px; background: transparent; border: none; }
+input[type=file]::file-selector-button { border: 1px solid #cdd8d7; background: white; border-radius: 5px; padding: 7px 10px; margin-right: 10px; color: #255d58; cursor: pointer; font: inherit; font-weight: 600; }
+h1, h2, h3, p { margin: 0; }
+button { border: 0; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
